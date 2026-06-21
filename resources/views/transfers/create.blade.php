@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Transfer</title>
+    <title>Transfer Dana</title>
 </head>
 <body>
 
-<h2>Form Transfer</h2>
+<h2>Transfer Dana</h2>
 
-<form>
-    <label>Pengirim</label><br>
-    <input type="text"><br><br>
+<form action="{{ route('transfers.store') }}" method="POST">
+    @csrf
 
-    <label>Penerima</label><br>
-    <input type="text"><br><br>
+    <p>
+        Nama Penerima
+        <br>
+        <input type="text" name="receiver">
+    </p>
 
-    <label>Nominal</label><br>
-    <input type="number"><br><br>
+    <p>
+        Nominal Transfer
+        <br>
+        <input type="number" name="amount">
+    </p>
+
+    <p>
+        Keterangan
+        <br>
+        <textarea name="description"></textarea>
+    </p>
 
     <button type="submit">
         Transfer
     </button>
 </form>
+
+<br>
+
+<a href="{{ route('transactions.history') }}">
+    Lihat Riwayat Transaksi
+</a>
 
 </body>
 </html>
