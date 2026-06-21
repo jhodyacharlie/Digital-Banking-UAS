@@ -18,10 +18,21 @@ class Login extends User
 
     public static function attempt(string $account, string $password, bool $remember = false): bool
     {
-        return Auth::attempt(static::credentials($account, $password), $remember);
+        foreach (static::credentialOptions($account, $password) as $credentials) {
+            if (Auth::attempt($credentials, $remember)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static function credentials(string $account, string $password): array
+    {
+        return static::credentialOptions($account, $password)[0];
+    }
+
+    public static function credentialOptions(string $account, string $password): array
     {
         $field = filter_var($account, FILTER_VALIDATE_EMAIL) ? 'email' : 'no_card';
 
@@ -29,9 +40,22 @@ class Login extends User
             $field = 'email';
         }
 
-        return [
+        $fields = [$field];
+
+        if (str_contains($account, '@')) {
+            array_unshift($fields, 'email');
+        }
+
+        if (Schema::hasColumn('users', 'no_card')) {
+            $fields[] = 'no_card';
+        }
+
+        $fields[] = 'email';
+        $fields = array_values(array_unique($fields));
+
+        return array_map(fn (string $field): array => [
             $field => $account,
             'password' => $password,
-        ];
+        ], $fields);
     }
 }
