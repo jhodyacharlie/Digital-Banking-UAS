@@ -1,42 +1,91 @@
+<?php
+    $errors = $errors ?? new \Illuminate\Support\ViewErrorBag();
+    $accountError = $errors->first('no_card');
+    $passwordError = $errors->first('password');
+    $loginError = $errors->first('login');
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
-    <title>Form</title>
+    <link rel="stylesheet" href="<?php echo e(asset('css/login.css')); ?>">
+    <title>Login Digital Banking</title>
 </head>
 
 <body>
-    <div class="main-container centered-flex">
-        <div class="form-container">
-            <div class="icon fa fa-user"></div>
-            <form class="centered-flex">
-                <div class="title">Login Bank Account</div>
-                <div class="msg"></div>
-                <div class="field">
-                    <input type="text" placeholder="No Card" id="uname">
-                    <span class="fa fa-user"></span>
+    <main class="login-page">
+        <section class="login-panel" aria-labelledby="login-title">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">DB</div>
+                <div>
+                    <p class="brand-kicker">Digital Banking</p>
+                    <h1 id="login-title">Masuk Akun</h1>
                 </div>
+            </div>
+
+            <?php if (session('status')): ?>
+                <div class="notice success"><?php echo e(session('status')); ?></div>
+            <?php endif; ?>
+
+            <?php if ($loginError): ?>
+                <div class="notice error"><?php echo e($loginError); ?></div>
+            <?php endif; ?>
+
+            <form method="POST" action="<?php echo e(route('login.store')); ?>" class="login-form" novalidate>
+                <?php echo csrf_field(); ?>
+
                 <div class="field">
-                    <input type="password" placeholder="Password" id="pass">
-                    <span class="fa fa-lock"></span>
+                    <label for="no_card">No Kartu / Email</label>
+                    <input
+                        type="text"
+                        name="no_card"
+                        id="no_card"
+                        value="<?php echo e(old('no_card')); ?>"
+                        placeholder="Masukkan no kartu atau email"
+                        autocomplete="username"
+                        required
+                        autofocus
+                    >
+                    <?php if ($accountError): ?>
+                        <p class="input-error"><?php echo e($accountError); ?></p>
+                    <?php endif; ?>
                 </div>
-                <div class="action centered-flex">
-                    <label for="remember" class="centered-flex">
-                        <input type="checkbox" id="remember"> Remember me
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Masukkan password"
+                        autocomplete="current-password"
+                        required
+                    >
+                    <?php if ($passwordError): ?>
+                        <p class="input-error"><?php echo e($passwordError); ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-row">
+                    <label for="remember" class="remember">
+                        <input type="checkbox" name="remember" id="remember" value="1" <?php echo old('remember') ? 'checked' : ''; ?>>
+                        Ingat saya
                     </label>
-                    <a href="#">Forget Password ?</a>
+                    <a href="<?php echo e(route('login')); ?>">Lupa password?</a>
                 </div>
-                <div class="btn-container">
-                    <input type="submit" id="login-btn" value="Login">
-                </div>
-                <div class="signup">Don't have an Bank Account?<a href="#"> Create</a></div>
+
+                <p class="msg" aria-live="polite"></p>
+
+                <button type="submit" id="login-btn" class="login-button">
+                    Masuk
+                </button>
             </form>
-        </div>
-    </div>
-    <script src="login.js"></script>
+        </section>
+    </main>
+
+    <script src="<?php echo e(asset('js/login.js')); ?>" defer></script>
 </body>
 
 </html>

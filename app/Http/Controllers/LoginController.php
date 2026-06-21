@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Login;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+
+class LoginController extends Controller
+{
+    public function show(): View|RedirectResponse
+    {
+        if (Auth::check()) {
+            return redirect()->route('posts.index');
+        }
+
+        return view('login');
+    }
+
+    public function authenticate(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'no_card' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string'],
+        ], [
+            'no_card.required' => 'Nomor kartu atau email wajib diisi.',
+            'password.required' => 'Password wajib diisi.',
+        ]);
+
+        $isAuthenticated = Login::attempt(
+            trim($validated['no_card']),
+            $validated['password'],
+            $request->boolean('remember')
+        );
+
+        if ($isAuthenticated) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('posts.index'));
+        }
+
+        return back()
+            ->withErrors(['login' => 'Nomor kartu/email atau password salah.'])
+            ->onlyInput('no_card');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('status', 'Anda berhasil keluar.');
+    }
+}
