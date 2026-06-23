@@ -1,18 +1,20 @@
 <?php
 
 namespace App\Models;
-//sementara gak tau pake database apa jadi mongodb dulu
-use MongoDB\Laravel\Eloquent\Model;
 
-class Payment extends Model
+use Illuminate\Database\Eloquent\Model;
+
+class Pay extends Model
 {
-    protected $connection = 'mongodb';
-
-    protected $collection = 'payments';
+    protected $table = 'payments';
 
     protected $fillable = [
         'user_id',
         'amount',
-        'status'
+        'status',
+    ];
+
+    protected $casts = [
+        'amount' => 'decimal:2',
     ];
 }
