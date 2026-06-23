@@ -10,9 +10,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\TransactionHistoryController;
 
-// TAMBAHKAN INI
+
 use App\Http\Controllers\OTPController;
-use App\Http\Controllers\SecurityController;
 
 Route::get('/', function () {
     return redirect('/posts');
@@ -28,7 +27,10 @@ Route::get('/status', [StatusController::class, 'index']);
 Route::get('/notifications', [NotificationController::class, 'index']);
 
 
-// TAMBAHKAN INI
+// OTP dan Security
+//Route digunakan untuk menghubungkan URL dengan controller.
+//Route GET digunakan untuk menampilkan halaman, sedangkan POST digunakan untuk menyimpan data.
+
 Route::get('/otp', [OTPController::class, 'index']);
 Route::post('/otp', [OTPController::class, 'store']);
 
