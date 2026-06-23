@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Models\Security;
 
 class SecurityController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        $user = Auth::user();
-        $securityScore = $user->email_verified_at ? 92 : 76;
+        return view('security');
+    }
 
-        return view('security', compact('user', 'securityScore'));
+    public function store(Request $request)
+    {
+        Security::create([
+            'username' => $request->username,
+            'pin' => $request->pin,
+            'security_question' => $request->security_question,
+            'security_answer' => $request->security_answer
+        ]);
+
+        return back()->with('success', 'Data keamanan berhasil disimpan');
     }
 }

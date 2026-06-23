@@ -1,33 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers;
 
-use App\Models\Pay;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Models\pay;
 
 class PayController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        return view('payment', [
-            'user' => request()->user(),
-        ]);
+        return view('payment');
     }
-
-    public function store(Request $request): RedirectResponse
+     public function store(Request $request)
     {
-        $request->validate([
-            'amount' => ['required', 'numeric', 'min:1'],
-        ]);
-
         Pay::create([
-            'user_id' => $request->user()?->id,
+            'user_id' => $request->user_id,
             'amount' => $request->amount,
-            'status' => 'Pending',
+            'status' => 'Pending'
         ]);
 
-        return redirect()->route('status.index')->with('status', 'Transfer berhasil dibuat dan menunggu proses.');
+        return redirect('/status');
     }
 }

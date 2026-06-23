@@ -1,48 +1,32 @@
 <!DOCTYPE html>
-<html lang="id">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <title>Security Center</title>
+    <title>Security</title>
 </head>
+<body>
 
-<body class="page-body">
-    <main class="standalone-page">
-        <header class="page-hero">
-            <div>
-                <p class="eyebrow">Security</p>
-                <h1>Security center</h1>
-                <p>Ringkasan keamanan akun digital banking Anda.</p>
-            </div>
-            <a href="{{ route('dashboard') }}" class="ghost-button light">Kembali dashboard</a>
-        </header>
+<h1>Halaman Security</h1>
 
-        <section class="security-grid">
-            <article class="panel security-score">
-                <span>Security score</span>
-                <strong>{{ $securityScore }}%</strong>
-                <p>{{ $user->email_verified_at ? 'Email sudah terverifikasi.' : 'Email belum terverifikasi. Tambahkan fitur verifikasi agar score meningkat.' }}</p>
-            </article>
+<form action="/security" method="POST">
+    @csrf
 
-            <article class="panel security-list">
-                <h2>Account checks</h2>
-                <div class="check-row">
-                    <span>Email login</span>
-                    <strong>{{ $user->email }}</strong>
-                </div>
-                <div class="check-row">
-                    <span>No kartu</span>
-                    <strong>{{ $user->no_card ?? '-' }}</strong>
-                </div>
-                <div class="check-row">
-                    <span>Password</span>
-                    <strong>Terenkripsi oleh Laravel Hash</strong>
-                </div>
-            </article>
-        </section>
-    </main>
+    <label>Username:</label><br>
+    <input type="text" name="username" required><br><br>
+
+    <label>PIN:</label><br>
+    <input type="password" name="pin" required><br><br>
+
+    <label>Pertanyaan Keamanan:</label><br>
+    <input type="text" name="security_question" required><br><br>
+
+    <label>Jawaban:</label><br>
+    <input type="text" name="security_answer" required><br><br>
+
+    <button type="submit">
+        Simpan Security
+    </button>
+
+</form>
+
 </body>
-
 </html>

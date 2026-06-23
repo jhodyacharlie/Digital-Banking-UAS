@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pay;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class StatusController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        $payments = Pay::where('user_id', Auth::id())
-            ->latest()
-            ->get();
+        $payments = Pay::all();
 
         return view('status', compact('payments'));
     }
