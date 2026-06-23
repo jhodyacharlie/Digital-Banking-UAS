@@ -8,6 +8,15 @@ class Account extends Model
 {
     protected $fillable = [
         'account_number',
-        'account_name'
+        'account_name',
+        'account_type',
+        'status',
     ];
+
+    protected $table = 'accounts';
+
+    public function balance()
+    {
+        return $this->hasOne(Balance::class);
+    }
 }

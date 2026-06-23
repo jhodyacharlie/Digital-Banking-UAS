@@ -5,11 +5,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\BalanceController;
 
-Route::resource('accounts', AccountController::class);
-Route::resource('balances', BalanceController::class);
+Route::resource('accounts', AccountController::class)->except(['show']);
+Route::resource('balances', BalanceController::class)->except(['show']);
 
 Route::get('/', function () {
-    return redirect('/posts');
+    return redirect('/accounts');
 });
 
 Route::resource('posts', PostController::class);

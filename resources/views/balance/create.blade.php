@@ -1,21 +1,23 @@
-<h2>Tambah Balance</h2>
+@extends('layouts.digeboy')
 
-<form action="{{ route('balances.store') }}" method="POST">
-    @csrf
+@section('title', 'Tambah Balance - Digeboy')
+@section('heading', 'Tambah Balance')
+@section('subtitle', 'Masukkan saldo awal atau saldo terbaru untuk account Digeboy.')
 
-    <input type="number"
-           name="account_id"
-           placeholder="Account ID">
+@section('content')
+<section class="panel">
+    <div class="panel-header">
+        <div>
+            <h2 class="panel-title">Form Balance</h2>
+            <p class="panel-caption">Pilih account lalu isi jumlah saldo.</p>
+        </div>
+        <a class="btn btn-secondary" href="{{ route('balances.index') }}">Kembali</a>
+    </div>
 
-    <br><br>
-
-    <input type="number"
-           name="amount"
-           placeholder="Saldo">
-
-    <br><br>
-
-    <button type="submit">
-        Simpan
-    </button>
-</form>
+    <form class="form" action="{{ route('balances.store') }}" method="POST">
+        @csrf
+        @include('balance.form')
+        <button class="btn btn-primary" type="submit">Simpan Balance</button>
+    </form>
+</section>
+@endsection
