@@ -12,7 +12,7 @@
     <title>Dashboard Digital Banking</title>
 </head>
 
-<body>
+<body class="theme-{{ session('theme', 'light') }}">
     <div class="app-shell">
         <aside class="sidebar">
             <div class="brand">
@@ -27,15 +27,18 @@
                 <a class="nav-link active" href="{{ route('dashboard') }}">Dashboard</a>
                 <a class="nav-link" href="{{ route('payment.index') }}">Transfer</a>
                 <a class="nav-link" href="{{ route('transactions.index') }}">Transaction History</a>
-                <a class="nav-link" href="{{ route('security.index') }}">Security</a>
-                <a class="nav-link" href="{{ route('status.index') }}">Status</a>
+                <a class="nav-link" href="{{ route('status.index') }}">Status Transaksi</a>
                 <a class="nav-link" href="{{ route('notifications.index') }}">Notifications</a>
+                <a class="nav-link" href="{{ route('settings.index') }}">Settings</a>
+                <a class="nav-link" href="{{ route('balances.index') }}">Balance</a>
+                <a class="nav-link" href="{{ route('accounts.index') }}">Account</a>
+                <a class="nav-link" href="{{ route('security.index') }}">Security</a>
             </nav>
 
             <div class="sidebar-card">
                 <span>Security score</span>
                 <strong>{{ $securityScore }}%</strong>
-                <p>{{ $user->email_verified_at ? 'Akun sudah terverifikasi.' : 'Verifikasi email bisa menaikkan keamanan akun.' }}</p>
+                <p>{{ $user->email_verified_at ? 'Akun sudah terverifikasi.' : 'OTP aktif untuk menjaga login tetap aman.' }}</p>
             </div>
 
             <form method="POST" action="{{ route('logout') }}">
@@ -51,10 +54,15 @@
                     <h1>{{ $user->name }}</h1>
                 </div>
                 <div class="topbar-actions">
+                    <a href="{{ route('settings.index') }}" class="ghost-button">Tema {{ session('theme', 'light') === 'dark' ? 'Gelap' : 'Terang' }}</a>
                     <a href="{{ route('security.index') }}" class="ghost-button">Security</a>
                     <div class="account-chip">{{ $accountNumber }}</div>
                 </div>
             </header>
+
+            @if (session('success'))
+                <div class="notice success">{{ session('success') }}</div>
+            @endif
 
             <section class="hero-grid">
                 <article class="balance-panel">
@@ -65,28 +73,29 @@
                     <div class="balance-meta">
                         <span>Pengeluaran bulan ini: Rp {{ number_format($monthlyPayments, 0, ',', '.') }}</span>
                         <span>Total transaksi: {{ $paymentCount }}</span>
+                        <span>Status akun: Aktif</span>
                     </div>
                 </article>
 
                 <div class="action-stack" aria-label="Akses cepat utama">
                     <a href="{{ route('payment.index') }}" class="action-card">
                         <strong>Transfer Baru</strong>
-                        <span>Kirim pembayaran digital</span>
+                        <span>Buat payment dan kirim dana</span>
                     </a>
                     <a href="{{ route('transactions.index') }}" class="action-card">
                         <strong>Transaction History</strong>
                         <span>Lihat semua histori pembayaran</span>
                     </a>
-                    <a href="{{ route('security.index') }}" class="action-card">
-                        <strong>Security Center</strong>
-                        <span>Cek status keamanan akun</span>
+                    <a href="{{ route('notifications.index') }}" class="action-card">
+                        <strong>Notifications</strong>
+                        <span>Payment success dan login terbaru</span>
                     </a>
                 </div>
             </section>
 
             <section class="stats-grid">
                 <article class="stat-card">
-                    <span>Pembayaran pending</span>
+                    <span>Status transaksi</span>
                     <strong>Rp {{ number_format($pendingPayments, 0, ',', '.') }}</strong>
                 </article>
                 <article class="stat-card">
@@ -94,8 +103,8 @@
                     <strong>{{ $unreadNotifications }}</strong>
                 </article>
                 <article class="stat-card">
-                    <span>Status akun</span>
-                    <strong>Aktif</strong>
+                    <span>Payment</span>
+                    <strong>{{ $paymentCount }}</strong>
                 </article>
                 <article class="stat-card">
                     <span>Security score</span>
@@ -122,7 +131,7 @@
                                 <span class="transaction-dot"></span>
                                 <div>
                                     <strong>Transfer Digital Banking</strong>
-                                    <p>{{ $payment->created_at?->format('d M Y, H:i') ?? '-' }} · Ref #{{ str_pad($payment->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                    <p>{{ $payment->created_at?->format('d M Y, H:i') ?? '-' }} - Ref #{{ str_pad($payment->id, 5, '0', STR_PAD_LEFT) }}</p>
                                 </div>
                             </div>
                             <div class="transaction-amount">
@@ -138,7 +147,7 @@
                 </article>
 
                 <aside class="panel insight-panel">
-                    <div class="panel-header compact">
+                    <div class="panel-header">
                         <div>
                             <p class="eyebrow">Pusat info</p>
                             <h2>Notifications</h2>
@@ -154,7 +163,7 @@
                                 <span>{{ ucfirst($notification->status) }}</span>
                             </div>
                         @empty
-                            <div class="empty-state compact">
+                            <div class="empty-state">
                                 Belum ada notifikasi baru.
                             </div>
                         @endforelse

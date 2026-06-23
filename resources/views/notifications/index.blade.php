@@ -8,13 +8,13 @@
     <title>Notifications</title>
 </head>
 
-<body class="page-body">
+<body class="page-body theme-{{ session('theme', 'light') }}">
     <main class="standalone-page">
         <header class="page-hero">
             <div>
                 <p class="eyebrow">Notifications</p>
                 <h1>Daftar notifikasi</h1>
-                <p>Informasi terbaru yang terhubung dengan akun login Anda.</p>
+                <p>Informasi login, OTP, payment success, dan status terbaru untuk akun Anda.</p>
             </div>
             <a href="{{ route('dashboard') }}" class="ghost-button light">Kembali dashboard</a>
         </header>

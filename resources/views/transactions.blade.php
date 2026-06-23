@@ -8,7 +8,7 @@
     <title>Transaction History</title>
 </head>
 
-<body class="page-body">
+<body class="page-body theme-{{ session('theme', 'light') }}">
     <main class="standalone-page">
         <header class="page-hero">
             <div>
@@ -16,7 +16,10 @@
                 <h1>Transaction history</h1>
                 <p>Semua riwayat pembayaran yang tersimpan untuk akun login saat ini.</p>
             </div>
-            <a href="{{ route('dashboard') }}" class="ghost-button light">Kembali dashboard</a>
+            <div class="topbar-actions">
+                <a href="{{ route('payment.index') }}" class="ghost-button light">Transfer baru</a>
+                <a href="{{ route('dashboard') }}" class="ghost-button light">Dashboard</a>
+            </div>
         </header>
 
         <section class="panel history-panel">
@@ -29,7 +32,7 @@
                         <span class="transaction-dot"></span>
                         <div>
                             <strong>Transfer Digital Banking</strong>
-                            <p>{{ $payment->created_at?->format('d M Y, H:i') ?? '-' }} · Ref #{{ str_pad($payment->id, 5, '0', STR_PAD_LEFT) }}</p>
+                            <p>{{ $payment->created_at?->format('d M Y, H:i') ?? '-' }} - Ref #{{ str_pad($payment->id, 5, '0', STR_PAD_LEFT) }}</p>
                         </div>
                     </div>
                     <div class="transaction-amount">
