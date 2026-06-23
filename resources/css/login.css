@@ -1,0 +1,435 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #071734;
+    --navy-soft: #0e2b57;
+    --white: #ffffff;
+    --page: #f5f8fb;
+    --text: #122033;
+    --muted: #66758a;
+    --line: #dbe5ef;
+    --aqua: #18b7c7;
+    --gold: #e9b949;
+    --danger: #c93434;
+    --success: #167347;
+    --shadow: 0 28px 80px rgba(7, 23, 52, 0.24);
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--text);
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background: var(--page);
+}
+
+.centered-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    padding: 40px 20px;
+    background:
+        linear-gradient(132deg, rgba(7, 23, 52, 0.98) 0%, rgba(10, 35, 78, 0.96) 51%, rgba(245, 248, 251, 0.98) 51.2%, #ffffff 100%),
+        var(--page);
+}
+
+.main-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 52px 52px;
+    opacity: 0.22;
+    pointer-events: none;
+}
+
+.login-layout {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 1040px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 430px);
+    align-items: center;
+    gap: 64px;
+}
+
+.brand-panel {
+    color: var(--white);
+}
+
+.brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.brand-photo {
+    width: 78px;
+    height: 78px;
+    flex: 0 0 auto;
+    border: 3px solid rgba(255, 255, 255, 0.88);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+}
+
+.brand-kicker,
+.eyebrow {
+    color: var(--aqua);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.brand-panel h1 {
+    max-width: 520px;
+    color: var(--white);
+    font-size: 42px;
+    line-height: 1.06;
+    font-weight: 800;
+}
+
+.brand-copy {
+    max-width: 440px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.form-container {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    padding-top: 42px;
+}
+
+.logo-shell {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2;
+    width: 88px;
+    height: 88px;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.86);
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 18px 42px rgba(7, 23, 52, 0.22);
+    transform: translateX(-50%);
+}
+
+.bank-logo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.login-form {
+    width: 100%;
+    min-height: 498px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 64px 28px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.82);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow);
+}
+
+.eyebrow {
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.title {
+    margin-bottom: 18px;
+    color: var(--navy);
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.notice {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 11px 13px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.notice.error {
+    color: var(--danger);
+    background: #fff1f1;
+    border: 1px solid #f2c4c4;
+}
+
+.notice.success {
+    color: var(--success);
+    background: #eefbf4;
+    border: 1px solid #bfe8d2;
+}
+
+.msg {
+    width: 100%;
+    min-height: 22px;
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.msg.error {
+    color: var(--danger);
+}
+
+.msg.success {
+    color: var(--success);
+}
+
+.field {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.field label,
+.remember {
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.field input {
+    width: 100%;
+    min-height: 48px;
+    display: block;
+    outline: none;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #f9fbfd;
+    color: var(--text);
+    font-size: 16px;
+    padding: 12px 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.field input:focus {
+    border-color: var(--aqua);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(24, 183, 199, 0.14);
+}
+
+.field input::placeholder {
+    color: #8d9aab;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #f9fbfd inset;
+    -webkit-text-fill-color: var(--text);
+}
+
+.input-error {
+    margin-top: 7px;
+    color: var(--danger);
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.action {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 2px 0 4px;
+    font-size: 14px;
+}
+
+.remember {
+    justify-content: flex-start;
+    gap: 8px;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.remember input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--aqua);
+    cursor: pointer;
+}
+
+a {
+    color: var(--navy-soft);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--aqua);
+}
+
+.btn-container {
+    width: 100%;
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 14px 0 0;
+}
+
+.login-button {
+    min-width: 172px;
+    min-height: 48px;
+    border: 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 68%, #115f73 100%);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 14px 30px rgba(7, 23, 52, 0.22);
+    transition: transform 0.25s ease, background-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-button:hover {
+    box-shadow: 0 16px 34px rgba(7, 23, 52, 0.28);
+}
+
+.login-button:active {
+    transform: translateY(1px);
+}
+
+.login-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+}
+
+.shift-left {
+    transform: translateX(-52%);
+}
+
+.shift-right {
+    transform: translateX(52%);
+}
+
+.shift-top {
+    transform: translateY(-18px);
+}
+
+.shift-bottom {
+    transform: translateY(18px);
+}
+
+.no-shift {
+    transform: translate(0, 0);
+}
+
+@media (max-width: 820px) {
+    .main-container {
+        padding: 22px 14px;
+        background:
+            linear-gradient(180deg, rgba(7, 23, 52, 0.98) 0%, rgba(7, 23, 52, 0.98) 36%, #f5f8fb 36%, #f5f8fb 100%),
+            var(--page);
+    }
+
+    .login-layout {
+        max-width: 430px;
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .brand-panel {
+        text-align: center;
+    }
+
+    .brand-lockup {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .brand-panel h1 {
+        font-size: 30px;
+    }
+
+    .brand-copy {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        padding: 18px 12px;
+    }
+
+    .brand-photo {
+        width: 64px;
+        height: 64px;
+    }
+
+    .brand-panel h1 {
+        font-size: 26px;
+    }
+
+    .form-container {
+        min-height: 0;
+    }
+
+    .login-form {
+        min-height: 0;
+        padding: 62px 18px 20px;
+    }
+
+    .title {
+        font-size: 27px;
+    }
+
+    .action {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .shift-left {
+        transform: translateX(-34%);
+    }
+
+    .shift-right {
+        transform: translateX(34%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-button,
+    .field input {
+        transition: none;
+    }
+}
