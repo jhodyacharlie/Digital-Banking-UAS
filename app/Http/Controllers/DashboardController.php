@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use App\Models\Pay;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function index(): View
+    public function index(): View|RedirectResponse
     {
+        if (! session('otp_verified')) {
+            return redirect()->route('otp.index');
+        }
+
         $user = Auth::user();
         $paymentQuery = Pay::where('user_id', $user->id);
         $payments = (clone $paymentQuery)

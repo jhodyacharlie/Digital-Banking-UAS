@@ -88,7 +88,7 @@
                             <input type="checkbox" name="remember" id="remember" value="1" <?php echo old('remember') ? 'checked' : ''; ?>>
                             Ingat saya
                         </label>
-                        <a href="<?php echo e(route('login')); ?>">Lupa password?</a>
+                        <a href="<?php echo e(route('security.index')); ?>">Lupa password?</a>
                     </div>
 
                     <div class="btn-container">
@@ -104,4 +104,3 @@
     <script src="<?php echo e(asset('js/login.js')); ?>" defer></script>
 </body>
 </html>
-

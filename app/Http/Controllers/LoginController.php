@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Login;
+use App\Models\Notification;
+use App\Models\OTP;
+use App\Models\Setting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +41,31 @@ class LoginController extends Controller
         if ($isAuthenticated) {
             $request->session()->regenerate();
             $request->session()->forget('url.intended');
+            $request->session()->put('otp_verified', false);
+            $request->session()->put(
+                'theme',
+                Setting::where('user_id', Auth::id())->where('key', 'theme')->value('value') ?? 'light'
+            );
 
-            return redirect()->route('dashboard');
+            $otp = (string) random_int(100000, 999999);
+
+            OTP::create([
+                'email' => Auth::user()->email,
+                'otp_code' => $otp,
+                'expired_at' => now()->addMinutes(5),
+            ]);
+
+            Notification::create([
+                'user_id' => Auth::id(),
+                'title' => 'Login baru',
+                'message' => 'Akun Anda berhasil login dan menunggu verifikasi OTP.',
+                'status' => 'unread',
+            ]);
+
+            return redirect()
+                ->route('otp.index')
+                ->with('status', 'Login berhasil. Masukkan kode OTP untuk lanjut ke dashboard.')
+                ->with('demo_otp', $otp);
         }
 
         return back()

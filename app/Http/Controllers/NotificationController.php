@@ -14,6 +14,6 @@ class NotificationController extends Controller
             ->latest()
             ->get();
 
-        return view('Notif.index', compact('notifications'));
+        return view('notifications.index', compact('notifications'));
     }
 }
