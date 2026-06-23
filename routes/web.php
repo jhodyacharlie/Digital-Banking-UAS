@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PayController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/', function () {
     return redirect('/posts');
@@ -15,3 +16,4 @@ Route::get('/payment', [PayController::class, 'index']);
 Route::post('/payment', [PayController::class, 'store']);
 Route::get('/status', [StatusController::class, 'index']);
 Route::get('/notifications', [NotificationController::class, 'index']);
+Route::get('/settings', [SettingController::class, 'index']);
