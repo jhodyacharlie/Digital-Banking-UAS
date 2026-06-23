@@ -4,17 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\PayController;
-use App\Http\Controllers\StatusController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\SecurityController;
-use App\Http\Controllers\TransactionHistoryController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BalanceController;
 
 
 use App\Http\Controllers\OTPController;
 
 Route::get('/', function () {
-    return redirect('/posts');
+    return redirect('/accounts');
 });
 
 Route::resource('posts', PostController::class);
