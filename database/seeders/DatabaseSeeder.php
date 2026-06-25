@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
 Amelia Febriani Putri Martha',
                 'no_card' => '535250149',
                 'password' => 'Ameliapw',
-                'balance' => 125000,
+                'balance' => 1000000000000,
             ]
         );
     }
