@@ -25,6 +25,34 @@
 
         @yield('content')
     </main>
+
+    <!-- SKRIP ANTI-INSPECT START -->
+    <script>
+        // 1. Blokir Klik Kanan
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 2. Blokir Shortcut Keyboard Inspect (F12, Ctrl+Shift+I, dll)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12') e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') e.preventDefault();
+            if (e.ctrlKey && e.key === 'u') e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') e.preventDefault();
+        });
+
+        // 3. Trik Hancurkan Layar Jika Inspect Dibuka Paksa
+        setInterval(function() {
+            const startTime = performance.now();
+            debugger; 
+            const endTime = performance.now();
+            if (endTime - startTime > 100) {
+                document.body.innerHTML = "<h1 style='text-align:center;margin-top:20%;font-family:sans-serif;'>Akses Ditolak! Tolong tutup Inspect Element Anda.</h1>";
+            }
+        }, 1000);
+    </script>
+    <!-- SKRIP ANTI-INSPECT END -->
 </body>
 
 </html>
