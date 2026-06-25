@@ -79,5 +79,15 @@ class DatabaseSeeder extends Seeder
                 'balance' => 343463443,
             ]
         );
+                User::updateOrCreate(
+            ['email' => 'amelia.535250149@stu.untar.ac.id'],
+            [
+                'name' => '
+Amelia Febriani Putri Martha',
+                'no_card' => '535250149',
+                'password' => 'Ameliapw',
+                'balance' => 125000,
+            ]
+        );
     }
 }
